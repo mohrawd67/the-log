@@ -6,6 +6,7 @@
    ========================================================================== */
 
 const STORAGE_KEY = "thelog_state_v1";
+import { supabase } from "./THE LOG 6.js";
 let activeUser = null;
 
 export function setActiveUser(user) {
@@ -54,29 +55,36 @@ export function loadState() {
 }
 
 let saveTimer = null;
+let pendingState = null;
+let remoteSave = Promise.resolve();
+
 export function saveState(state) {
-  // Debounce writes slightly so rapid actions (typing, dragging) don't
-  // thrash localStorage — keeps the app fast per §54.
+  pendingState = JSON.parse(JSON.stringify(state));
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    try {
-      if (activeUser) {
-        import("./THE LOG 6.js").then(({ supabase }) => supabase.from("log_data").upsert({
+    const snapshot = pendingState;
+    if (activeUser) {
+      remoteSave = remoteSave.then(async () => {
+        const { error } = await supabase.from("log_data").upsert({
           user_id: activeUser.id,
-          state,
+          state: snapshot,
           updated_at: new Date().toISOString()
-        })).catch((err) => console.error("THE LOG: failed to sync state.", err));
-      } else {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        });
+        if (error) throw error;
+      }).catch((error) => {
+        console.error("THE LOG: failed to sync state.", error);
+      });
+    } else {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+      } catch (error) {
+        console.error("THE LOG: failed to save state.", error);
       }
-    } catch (err) {
-      console.error("THE LOG: failed to save state.", err);
     }
   }, 120);
 }
 
 export async function loadRemoteState(user) {
-  const { supabase } = await import("./THE LOG 6.js");
   const { data, error } = await supabase.from("log_data").select("state").eq("user_id", user.id).maybeSingle();
   if (error) throw error;
   return data?.state || null;
