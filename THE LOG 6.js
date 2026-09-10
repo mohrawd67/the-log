@@ -1,5 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const APP_URL = "https://mohrawd67.github.io/the-log/";
+
 export const supabase = createClient(
   "https://efcgmalueyjxgylbosrj.supabase.co",
   "sb_publishable_G5vJKsZrZpyEzy5RO6NMcQ_iGdjZBL1",
@@ -22,7 +24,10 @@ export async function signUp(email, password, name) {
   return supabase.auth.signUp({
     email,
     password,
-    options: { data: { name } }
+    options: {
+      data: { name },
+      emailRedirectTo: `${APP_URL}#/menu`
+    }
   });
 }
 
@@ -36,6 +41,6 @@ export async function signOut() {
 
 export async function resetPassword(email) {
   return supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + window.location.pathname
+    redirectTo: `${APP_URL}#/menu`
   });
 }
