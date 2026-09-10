@@ -1,0 +1,78 @@
+/* ==========================================================================
+   THE LOG — SECTION LAYOUTS
+   ========================================================================== */
+
+/* ---- MAIN MENU ---- */
+.menu-hero { padding: var(--sp-5) 0 var(--sp-5); }
+.menu-greeting { font-size: var(--fs-2); font-weight: 700; font-family: var(--font-body); color: var(--white-80); margin-top: var(--sp-2); }
+.menu-sub { font-size: 1.1rem; color: var(--white-60); margin-top: 0.4rem; font-weight: 600; }
+
+.menu-nav-grid { margin-top: var(--sp-5); }
+
+.menu-week-panel {
+  margin-top: var(--sp-5);
+  background: var(--white-12);
+  border: 1px solid var(--white-20);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+}
+.menu-week-stats { display: flex; flex-wrap: wrap; gap: var(--sp-5); margin-top: var(--sp-3); }
+.menu-week-stat .stat-number { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+
+.menu-summary-row { display: flex; gap: var(--sp-3); margin-top: var(--sp-4); flex-wrap: wrap; }
+.menu-summary-row .card { flex: 1; min-width: 200px; }
+.menu-summary-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--white-60); font-weight: 700; }
+.menu-summary-value { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin-top: 0.3rem; }
+
+/* ---- STUDY ---- */
+.subject-card { display: flex; flex-direction: column; gap: var(--sp-2); }
+.subject-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.subject-card-stats { display: flex; gap: var(--sp-4); margin-top: var(--sp-2); flex-wrap: wrap; }
+.subject-mini-stat .stat-number { font-size: 1.6rem; }
+.subject-exam-next { margin-top: var(--sp-2); font-size: 0.85rem; color: var(--white-70, var(--white-80)); }
+
+.lesson-row { }
+.understanding-picker { display: flex; gap: var(--sp-1); }
+
+.exam-table { width: 100%; border-collapse: collapse; margin-top: var(--sp-2); }
+.exam-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--white-60); padding: 0.5rem 0.6rem; }
+.exam-table td { padding: 0.65rem 0.6rem; border-top: 1px solid var(--white-12); font-size: 0.9rem; }
+.exam-table tr:hover td { background: var(--white-12); }
+
+/* ---- GYM ---- */
+.workout-exercise-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: var(--sp-2); align-items: center; }
+@media (max-width: 640px) { .workout-exercise-row { grid-template-columns: 1fr 1fr; } }
+
+/* ---- LEARNING ---- */
+.roadmap-item { display: flex; align-items: center; gap: var(--sp-2); }
+.roadmap-item .row-check { }
+.project-status-pill { }
+
+/* ---- PLANNER ---- */
+.priority-slot {
+  border: 2px dashed var(--white-20);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  min-height: 110px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.priority-slot.filled { border-style: solid; background: var(--section-panel); }
+.priority-index { font-family: var(--font-display); font-size: 2.2rem; color: var(--white-40); }
+
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--sp-2); margin-top: var(--sp-3); }
+@media (max-width: 900px) { .week-grid { grid-template-columns: 1fr; } }
+.week-day { background: var(--section-panel); border-radius: var(--radius-md); padding: var(--sp-2); min-height: 160px; border: 1px solid var(--white-12); }
+.week-day-head { font-weight: 700; font-size: 0.85rem; margin-bottom: var(--sp-1); display:flex; justify-content: space-between; }
+.week-day.today { border-color: var(--white); background: var(--section-panel-strong); }
+.week-task { font-size: 0.78rem; padding: 0.35rem 0.5rem; background: var(--white-12); border-radius: 8px; margin-bottom: 4px; }
+.week-task.done { opacity: 0.5; text-decoration: line-through; }
+
+/* ---- INSIGHTS ---- */
+.insights-grid { margin-top: var(--sp-4); }
+.chart-card svg { width: 100%; height: auto; display: block; }
+.time-filter-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-2); }
+
+/* ---- WEEKLY REVIEW ---- */
+.review-block { margin-bottom: var(--sp-4); }
+.review-list li { list-style: none; padding: 0.6rem 0; border-bottom: 1px solid var(--white-12); font-size: 0.95rem; }
+.review-list li:last-child { border-bottom: none; }

@@ -1,0 +1,119 @@
+/* ==========================================================================
+   THE LOG — DESIGN TOKENS
+   One section = one dominant color + white type. This file is the only
+   place color values live. Every section sets [data-section="..."] on
+   <body>, and the components below read the matching --section-* vars.
+   ========================================================================== */
+
+:root {
+  /* ---- Neutral scaffolding (used sparingly, never as a section bg) ---- */
+  --white: #ffffff;
+  --white-80: rgba(255, 255, 255, 0.8);
+  --white-60: rgba(255, 255, 255, 0.6);
+  --white-40: rgba(255, 255, 255, 0.4);
+  --white-20: rgba(255, 255, 255, 0.16);
+  --white-12: rgba(255, 255, 255, 0.1);
+  --black-20: rgba(0, 0, 0, 0.2);
+  --black-30: rgba(0, 0, 0, 0.3);
+
+  /* ---- Type scale (big, bold — per requirement §5 / §62) ---- */
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", sans-serif;
+
+  --fs-hero: clamp(3.2rem, 7vw, 6.4rem);
+  --fs-1: clamp(2.4rem, 4.8vw, 4rem);
+  --fs-2: clamp(1.8rem, 3.2vw, 2.6rem);
+  --fs-stat: clamp(2.6rem, 5.5vw, 4.6rem);
+  --fs-3: 1.35rem;
+  --fs-body: 1.05rem;
+  --fs-small: 0.85rem;
+
+  /* ---- Spacing ---- */
+  --sp-1: 0.5rem;
+  --sp-2: 0.75rem;
+  --sp-3: 1.25rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4.5rem;
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-mid: 260ms;
+  --dur-slow: 420ms;
+}
+
+/* ---------------------------------------------------------------------- */
+/* MAIN MENU — FULL ORANGE + WHITE                                        */
+/* ---------------------------------------------------------------------- */
+[data-section="menu"] {
+  --section-bg: #ff6a1f;
+  --section-bg-deep: #e6540f;
+  --section-bg-deeper: #cc4707;
+  --section-panel: rgba(255, 255, 255, 0.1);
+  --section-panel-strong: rgba(255, 255, 255, 0.16);
+  --section-accent: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* STUDY — FULL BLUE + WHITE                                              */
+/* ---------------------------------------------------------------------- */
+[data-section="study"] {
+  --section-bg: #1e4fd6;
+  --section-bg-deep: #163ead;
+  --section-bg-deeper: #102e85;
+  --section-panel: rgba(255, 255, 255, 0.1);
+  --section-panel-strong: rgba(255, 255, 255, 0.16);
+  --section-accent: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* GYM — FULL RED + WHITE                                                 */
+/* ---------------------------------------------------------------------- */
+[data-section="gym"] {
+  --section-bg: #d81f2c;
+  --section-bg-deep: #b31722;
+  --section-bg-deeper: #8f111a;
+  --section-panel: rgba(255, 255, 255, 0.1);
+  --section-panel-strong: rgba(255, 255, 255, 0.16);
+  --section-accent: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* LEARNING — FULL PURPLE / INDIGO + WHITE                                */
+/* ---------------------------------------------------------------------- */
+[data-section="learning"] {
+  --section-bg: #6427d6;
+  --section-bg-deep: #4f1cae;
+  --section-bg-deeper: #3b1385;
+  --section-panel: rgba(255, 255, 255, 0.1);
+  --section-panel-strong: rgba(255, 255, 255, 0.16);
+  --section-accent: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* PLANNER — FULL GREEN / TEAL + WHITE                                    */
+/* ---------------------------------------------------------------------- */
+[data-section="planner"] {
+  --section-bg: #0c9a72;
+  --section-bg-deep: #087a5a;
+  --section-bg-deeper: #065c44;
+  --section-panel: rgba(255, 255, 255, 0.1);
+  --section-panel-strong: rgba(255, 255, 255, 0.16);
+  --section-accent: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* INSIGHTS — FULL DEEP NAVY + WHITE                                      */
+/* ---------------------------------------------------------------------- */
+[data-section="insights"] {
+  --section-bg: #0a1830;
+  --section-bg-deep: #060f20;
+  --section-bg-deeper: #030812;
+  --section-panel: rgba(255, 255, 255, 0.08);
+  --section-panel-strong: rgba(255, 255, 255, 0.14);
+  --section-accent: #ffffff;
+}

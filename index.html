@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff6a1f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo-icon.svg" type="image/svg+xml">
+  <title>THE LOG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="THE%20LOG%201.css">
+  <link rel="stylesheet" href="THE%20LOG%202.css">
+  <link rel="stylesheet" href="THE%20LOG%203.css">
+  <link rel="stylesheet" href="THE%20LOG%204.css">
+  <link rel="stylesheet" href="THE%20LOG%205.css">
+</head>
+<body data-section="menu">
+  <div id="intro-splash" class="intro-splash" aria-label="THE LOG introduction">
+    <video class="intro-video" autoplay muted playsinline preload="auto">
+      <source src="the%20log%20intro.mp4" type="video/mp4">
+    </video>
+    <div class="intro-splash-footer">
+      <img src="the%20log%20icon.png" alt="THE LOG" class="intro-logo">
+      <button id="skip-intro" class="btn btn-ghost" type="button">Continue</button>
+    </div>
+  </div>
+  <div class="app-shell">
+    <header class="topnav">
+      <a class="topnav-brand" href="#/menu" aria-label="THE LOG home"><span class="dot" aria-hidden="true"></span>THE LOG</a>
+      <nav class="topnav-links" aria-label="Primary navigation">
+        <a class="topnav-link" data-nav-link="study" href="#/study">Study</a>
+        <a class="topnav-link" data-nav-link="gym" href="#/gym">Gym</a>
+        <a class="topnav-link" data-nav-link="learning" href="#/learning">Learning</a>
+        <a class="topnav-link" data-nav-link="planner" href="#/planner">Planner</a>
+        <a class="topnav-link" data-nav-link="insights" href="#/insights">Insights</a>
+      </nav>
+      <button id="install-app" class="topnav-install" type="button" hidden>Install app</button>
+      <a class="topnav-home" href="#/menu" aria-label="Open main menu" title="Main menu">⌂</a>
+    </header>
+
+    <main id="view-root" class="view" tabindex="-1"></main>
+
+    <nav class="bottomnav" aria-label="Mobile navigation">
+      <div class="bottomnav-inner">
+        <a class="bottomnav-link" data-nav-link="study" href="#/study">Study</a>
+        <a class="bottomnav-link" data-nav-link="gym" href="#/gym">Gym</a>
+        <a class="bottomnav-link" data-nav-link="learning" href="#/learning">Learn</a>
+        <a class="bottomnav-link" data-nav-link="planner" href="#/planner">Plan</a>
+        <a class="bottomnav-link" data-nav-link="insights" href="#/insights">Stats</a>
+      </div>
+    </nav>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay" aria-modal="true" aria-hidden="true" aria-label="Dialog">
+    <div class="modal" id="modal-body"></div>
+  </div>
+  <div id="toast-host" aria-live="polite"></div>
+
+  <script type="module" src="THE%20LOH%2014.js"></script>
+</body>
+</html>
