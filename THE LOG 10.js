@@ -96,7 +96,10 @@ export function renderMenu() {
     <section class="menu-tools account-tools">
       <div class="section-head">
         <h2>ACCOUNT</h2>
-        <button class="btn btn-ghost btn-sm" data-action="sign-out">Log out</button>
+        <div class="button-row">
+          <button class="btn btn-primary btn-sm" data-action="save-now">Save now</button>
+          <button class="btn btn-ghost btn-sm" data-action="sign-out">Log out</button>
+        </div>
       </div>
       <p class="muted">Your THE LOG data is private to your account and syncs across devices.</p>
     </section>

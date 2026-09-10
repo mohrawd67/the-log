@@ -178,6 +178,15 @@ function enableReminders() {
   }).catch(() => toast("Notifications need browser permission to work"));
 }
 
+async function saveNow() {
+  try {
+    await S.saveNowForUser();
+    toast("Saved successfully");
+  } catch (error) {
+    toast(`Save failed: ${error.message || "check your connection"}`);
+  }
+}
+
 /* ---------------------------------------------------------------------- */
 /* MODAL OPENERS                                                           */
 /* ---------------------------------------------------------------------- */
@@ -465,6 +474,7 @@ document.addEventListener("click", (e) => {
   const action = el.dataset.action;
 
   switch (action) {
+    case "save-now": saveNow(); break;
     case "sign-out": signOut().catch(() => toast("Could not log out")); break;
     case "export-data": exportData(); break;
     case "import-data": document.getElementById("import-file")?.click(); break;

@@ -58,29 +58,33 @@ let saveTimer = null;
 let pendingState = null;
 let remoteSave = Promise.resolve();
 
+export function saveNow(state) {
+  const snapshot = JSON.parse(JSON.stringify(state));
+  if (!activeUser) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  remoteSave = remoteSave.catch(() => {}).then(async () => {
+    const { error } = await supabase.from("log_data").upsert({
+      user_id: activeUser.id,
+      state: snapshot,
+      updated_at: new Date().toISOString()
+    });
+    if (error) throw error;
+  });
+  return remoteSave;
+}
+
 export function saveState(state) {
   pendingState = JSON.parse(JSON.stringify(state));
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     const snapshot = pendingState;
-    if (activeUser) {
-      remoteSave = remoteSave.then(async () => {
-        const { error } = await supabase.from("log_data").upsert({
-          user_id: activeUser.id,
-          state: snapshot,
-          updated_at: new Date().toISOString()
-        });
-        if (error) throw error;
-      }).catch((error) => {
-        console.error("THE LOG: failed to sync state.", error);
-      });
-    } else {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-      } catch (error) {
-        console.error("THE LOG: failed to save state.", error);
-      }
-    }
+    saveNow(snapshot).catch((error) => console.error("THE LOG: failed to sync state.", error));
   }, 120);
 }
 

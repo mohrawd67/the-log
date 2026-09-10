@@ -7,7 +7,7 @@
    truth, explicit updates, everything else re-reads from it.
    ========================================================================== */
 
-import { loadState, saveState, uid, setActiveUser, loadRemoteState } from "./THE LOG 7.js";
+import { loadState, saveState, saveNow, uid, setActiveUser, loadRemoteState } from "./THE LOG 7.js";
 
 export const state = loadState();
 
@@ -21,6 +21,10 @@ export async function hydrateForUser(user) {
 
 export function clearUser() {
   setActiveUser(null);
+}
+
+export function saveNowForUser() {
+  return saveNow(state);
 }
 
 const listeners = [];
