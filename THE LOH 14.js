@@ -26,6 +26,7 @@ let installPrompt = null;
 let session = null;
 let authReady = false;
 let authMode = "login";
+let hydratedUserId = null;
 
 function closeIntro() {
   if (!introSplash) return;
@@ -582,13 +583,21 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
 async function boot() {
   try {
     session = await currentSession();
-    if (session) await S.hydrateForUser(session.user);
+    if (session) {
+      await S.hydrateForUser(session.user);
+      hydratedUserId = session.user.id;
+    }
     authReady = true;
     route();
-    supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+    supabase.auth.onAuthStateChange(async (event, nextSession) => {
       session = nextSession;
-      if (session) await S.hydrateForUser(session.user);
-      else S.clearUser();
+      if (event === "SIGNED_OUT") {
+        hydratedUserId = null;
+        S.clearUser();
+      } else if (event === "SIGNED_IN" && session?.user?.id !== hydratedUserId) {
+        await S.hydrateForUser(session.user);
+        hydratedUserId = session.user.id;
+      }
       route();
     });
   } catch (error) {
