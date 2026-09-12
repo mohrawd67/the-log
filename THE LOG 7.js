@@ -54,8 +54,6 @@ export function loadState() {
   }
 }
 
-let saveTimer = null;
-let pendingState = null;
 let remoteSave = Promise.resolve();
 
 export function saveNow(state) {
@@ -80,12 +78,7 @@ export function saveNow(state) {
 }
 
 export function saveState(state) {
-  pendingState = JSON.parse(JSON.stringify(state));
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    const snapshot = pendingState;
-    saveNow(snapshot).catch((error) => console.error("THE LOG: failed to sync state.", error));
-  }, 120);
+  saveNow(state).catch((error) => console.error("THE LOG: failed to sync state.", error));
 }
 
 export async function loadRemoteState(user) {
