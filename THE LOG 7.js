@@ -58,13 +58,9 @@ let remoteSave = Promise.resolve();
 
 export function saveNow(state) {
   const snapshot = JSON.parse(JSON.stringify(state));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
   if (!activeUser) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-      return Promise.resolve();
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return Promise.resolve();
   }
   remoteSave = remoteSave.catch(() => {}).then(async () => {
     const { error } = await supabase.from("log_data").upsert({

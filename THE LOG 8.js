@@ -14,8 +14,20 @@ export const state = loadState();
 export async function hydrateForUser(user) {
   setActiveUser(user);
   const remote = await loadRemoteState(user);
-  if (remote) Object.assign(state, remote);
-  else saveState(state);
+  const local = loadState();
+  const localHasData = local.subjects.length || local.gym.workouts.length
+    || local.learning.paths.length || local.learning.sessions.length
+    || local.learning.projects.length || local.tasks.length;
+  const remoteHasData = remote && (remote.subjects?.length || remote.gym?.workouts?.length
+    || remote.learning?.paths?.length || remote.learning?.sessions?.length
+    || remote.learning?.projects?.length || remote.tasks?.length);
+
+  if (remoteHasData) {
+    Object.assign(state, remote);
+  } else if (localHasData) {
+    Object.assign(state, local);
+    await saveNowForUser();
+  }
   notify();
 }
 
