@@ -1,9 +1,11 @@
-const CACHE_NAME = "the-log-v7";
+const CACHE_NAME = "the-log-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
   "./the%20log%20icon.png",
+  "./the-log-icon-192.png",
+  "./the-log-icon-512.png",
   "./the%20log%20intro.mp4",
   "./THE%20LOG%201.css",
   "./THE%20LOG%202.css",

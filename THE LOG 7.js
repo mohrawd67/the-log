@@ -9,6 +9,10 @@ const STORAGE_KEY = "thelog_state_v1";
 import { supabase } from "./THE LOG 6.js";
 let activeUser = null;
 
+function storageKey(userId = null) {
+  return userId ? `${STORAGE_KEY}_${userId}` : STORAGE_KEY;
+}
+
 export function setActiveUser(user) {
   activeUser = user || null;
 }
@@ -34,9 +38,9 @@ export function defaultState() {
   };
 }
 
-export function loadState() {
+export function loadState(userId = null) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return defaultState();
     const parsed = JSON.parse(raw);
     // Merge with defaults so new fields introduced later don't break old saves
@@ -59,21 +63,23 @@ let remoteSave = Promise.resolve();
 export function saveNow(state) {
   const snapshot = JSON.parse(JSON.stringify(state));
   snapshot.meta = { ...(snapshot.meta || {}), lastSavedAt: new Date().toISOString() };
+  const user = activeUser;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+    localStorage.setItem(storageKey(user?.id), JSON.stringify(snapshot));
   } catch (error) {
     console.warn("THE LOG: local recovery copy could not be written.", error);
   }
-  if (!activeUser) {
+  if (!user) {
     return Promise.resolve();
   }
   remoteSave = remoteSave.catch(() => {}).then(async () => {
-    const { error } = await supabase.from("log_data").upsert({
-      user_id: activeUser.id,
+    const { data, error } = await supabase.from("log_data").upsert({
+      user_id: user.id,
       state: snapshot,
       updated_at: new Date().toISOString()
-    });
+    }, { onConflict: "user_id" }).select("user_id, state, updated_at").single();
     if (error) throw error;
+    if (!data || data.user_id !== user.id) throw new Error("Supabase did not confirm this user's save.");
     window.dispatchEvent(new CustomEvent("thelog-save-status", { detail: { ok: true } }));
   }).catch((error) => {
     window.dispatchEvent(new CustomEvent("thelog-save-status", { detail: { ok: false, error } }));
@@ -89,7 +95,7 @@ export function saveState(state) {
 export async function loadRemoteState(user) {
   const { data, error } = await supabase.from("log_data").select("state").eq("user_id", user.id).maybeSingle();
   if (error) throw error;
-  return data?.state || null;
+  return { exists: Boolean(data), state: data?.state || null };
 }
 
 export function uid() {
