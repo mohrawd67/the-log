@@ -58,7 +58,12 @@ let remoteSave = Promise.resolve();
 
 export function saveNow(state) {
   const snapshot = JSON.parse(JSON.stringify(state));
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+  snapshot.meta = { ...(snapshot.meta || {}), lastSavedAt: new Date().toISOString() };
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+  } catch (error) {
+    console.warn("THE LOG: local recovery copy could not be written.", error);
+  }
   if (!activeUser) {
     return Promise.resolve();
   }
@@ -69,6 +74,10 @@ export function saveNow(state) {
       updated_at: new Date().toISOString()
     });
     if (error) throw error;
+    window.dispatchEvent(new CustomEvent("thelog-save-status", { detail: { ok: true } }));
+  }).catch((error) => {
+    window.dispatchEvent(new CustomEvent("thelog-save-status", { detail: { ok: false, error } }));
+    throw error;
   });
   return remoteSave;
 }

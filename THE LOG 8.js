@@ -392,7 +392,12 @@ export function disciplineBreakdown(subjectName) {
 
 /* ---- Date helpers ---- */
 
-function toDateStr(d) { return d.toISOString().slice(0, 10); }
+function toDateStr(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
 export function startOfWeek(date = new Date()) {
   const d = new Date(date);
@@ -431,6 +436,21 @@ export function learningHoursInRange(fromStr, toStr) {
   return state.learning.sessions
     .filter((s) => inRange(s.date.slice(0, 10), fromStr, toStr))
     .reduce((sum, s) => sum + s.hours, 0);
+}
+
+export function studyHoursByPeriod() {
+  const now = new Date();
+  const today = toDateStr(now);
+  const weekStart = startOfWeek(now);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const yearStart = new Date(now.getFullYear(), 0, 1);
+  const end = `${now.getFullYear()}-12-31`;
+  return {
+    day: studyHoursInRange(today, today),
+    week: studyHoursInRange(toDateStr(weekStart), today),
+    month: studyHoursInRange(toDateStr(monthStart), today),
+    year: studyHoursInRange(toDateStr(yearStart), end)
+  };
 }
 
 export function gymSessionsInRange(fromStr, toStr) {

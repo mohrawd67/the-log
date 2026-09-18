@@ -9,7 +9,7 @@ import { state, subjectExamAverage, subjectExamAverageByType, subjectUnderstandi
   subjectBestExam, subjectLowestExam, subjectStudyHours, subjectDiscipline, disciplineBreakdown, overallDiscipline, overallUnderstanding,
   examPercent, thisWeekSummary, strongestWeakestFocus, gymCurrentStreak,
   startOfWeek, daysOfWeek, tasksForDate, weeklyReview,
-  studyHoursInRange, learningHoursInRange, gymSessionsInRange, tasksCompletedInRange } from "./THE LOG 8.js";
+  studyHoursInRange, learningHoursInRange, gymSessionsInRange, tasksCompletedInRange, studyHoursByPeriod } from "./THE LOG 8.js";
 import { ringSVG, lineChartSVG, barChartSVG } from "./THE LOG 9.js";
 
 const UNDERSTANDING_LABEL = { not: "Not understood", partial: "Partially understood", understood: "Understood" };
@@ -551,6 +551,7 @@ export function renderInsights(period = "week") {
   const gymCount = gymSessionsInRange(from, to).length;
   const tasksDone = tasksCompletedInRange(from, to);
   const activityVals = buckets.map((bucket) => studyHoursInRange(bucket, bucket) + learningHoursInRange(bucket, bucket));
+  const studyPeriods = studyHoursByPeriod();
   const examAvgAll = (() => {
     const all = state.subjects.flatMap((s) => s.exams);
     if (!all.length) return null;
@@ -574,6 +575,10 @@ export function renderInsights(period = "week") {
     </div>
 
     <div class="grid grid-4 insights-grid" style="margin-bottom:var(--sp-4)">
+      <div class="card"><div class="stat-number">${studyPeriods.day}h</div><div class="stat-label">Study Today</div></div>
+      <div class="card"><div class="stat-number">${studyPeriods.week}h</div><div class="stat-label">Study This Week</div></div>
+      <div class="card"><div class="stat-number">${studyPeriods.month}h</div><div class="stat-label">Study This Month</div></div>
+      <div class="card"><div class="stat-number">${studyPeriods.year}h</div><div class="stat-label">Study This Year</div></div>
       <div class="card"><div class="stat-number">${gymCount}</div><div class="stat-label">Gym Sessions</div></div>
       <div class="card"><div class="stat-number">${learningHrs}h</div><div class="stat-label">Programming Hours</div></div>
       <div class="card"><div class="stat-number">${tasksDone}</div><div class="stat-label">Tasks Completed</div></div>

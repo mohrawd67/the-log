@@ -125,6 +125,10 @@ function toast(msg) {
   setTimeout(() => el.remove(), 2200);
 }
 
+window.addEventListener("thelog-save-status", (event) => {
+  if (!event.detail.ok) toast("Save failed. Your local recovery copy was kept.");
+});
+
 function exportData() {
   const blob = new Blob([JSON.stringify(S.state, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
